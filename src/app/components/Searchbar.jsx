@@ -9,6 +9,13 @@ import { useDispatch } from "react-redux";
 const Searchbar= function(){
   const dispatch= useDispatch();
     const router = useRouter();
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
+
     const[loading,setloading]=useState(false);
     const [text,setText]= useState('');
     const onChange= (e)=>{
@@ -32,10 +39,10 @@ const Searchbar= function(){
          
         }
         else if ( text.length>0){
-          router.push(`/text?id=${text}`)
+          router.push(`/text?id=${text}&id=${selectedOption}`)
         }
         else{
-          router.push(`/image?id=${image_data}`)
+          router.push(`/image?id=${image_data}&id=${selectedOption}`)
         }
     
         //postSearch(search_data)
@@ -54,7 +61,35 @@ const Searchbar= function(){
             
                <p className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</p>
             
-               <div className="flex  justify-between my-2 w-[60%]"> <p className=" text-white">{image_data}</p> <button  onClick={()=>set_image_data('')} className="bg-indigo-800 h-20 w-12 text-white"> X</button></div>
+               <div className="flex  justify-between my-2 w-[60%]"> <p className=" text-white">{image_data}</p> 
+               <div>
+               <div className="mb-2 flex flex">
+                <input
+                    type="radio"
+                    id="option1"
+                    name="options"
+                    value="option1"
+                    checked={selectedOption === 'option1'}
+                    onChange={handleOptionChange}
+                    className="mr-2"
+                />
+                <label className="text-white" htmlFor="option1">man</label>
+            </div>
+            <div className="mb-2">
+                <input
+                    type="radio"
+                    id="option2"
+                    name="options"
+                    value="option2"
+                    checked={selectedOption === 'option2'}
+                    onChange={handleOptionChange}
+                    className="mr-2"
+                />
+                <label className="text-white" htmlFor="option2">woman</label>
+            </div>
+               <button  onClick={()=>set_image_data('')} className="bg-indigo-800 h-20  rounded-lg py-1 w-12 text-white"> X</button>
+               </div>
+               </div>
           <div className='    w-[60%]    h-[10%]     rounded-xl bg-neutral-700 items-center flex flex-row justify-between
           '>
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="text-white m-5 size-6">

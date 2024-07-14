@@ -43,7 +43,7 @@ export default function Page_deatil({params}){
     useInfiniteQuery({
       queryKey: ['text',search],
       queryFn: ({ pageParam = 0 }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=62?lastPage.nextPage:null,
+      getNextPageParam:(lastPage) => lastPage.nextPage!=120?lastPage.nextPage:null,
     });
     useEffect(()=>{
       queryClient.invalidateQueries(['text']);
