@@ -6,6 +6,8 @@ import { connectToMongoDB } from "../../config/database";
 
 import { ReactQueryProvider } from "./components/ReactQueryClientProvider";
 import { getKey } from "../../_action/KeyAction";
+import Searchbar from "./components/Searchbar";
+import EmbedProviders from './GlobalRedux/provider'
 export default function RootLayout({ children }) {
   connectToMongoDB()
 
@@ -13,7 +15,13 @@ export default function RootLayout({ children }) {
 
     <html lang="en">
       <ReactQueryProvider>
-      <body>{children}</body>
+   
+      <body>
+      <EmbedProviders>
+      <Searchbar></Searchbar>
+        {children}
+        </EmbedProviders>
+        </body>
      </ReactQueryProvider>
     </html>
   

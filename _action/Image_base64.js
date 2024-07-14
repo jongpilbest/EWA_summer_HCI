@@ -2,7 +2,7 @@
 import * as faceapi from 'face-api.js';
 
 import { getKey } from './KeyAction';
-const  imagebase64 = async function(base64String,excel){
+const  imagebase64 = async function(base64String){
 
         // loading the models
         await faceapi.nets.ssdMobilenetv1.loadFromUri('/models');
@@ -18,7 +18,9 @@ const  imagebase64 = async function(base64String,excel){
        const idCardFacedetection = await faceapi.detectSingleFace(img,
           new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks().withFaceDescriptor();
-          getKey(idCardFacedetection.descriptor,excel)
+       console.log(idCardFacedetection.descriptor)
+          return (idCardFacedetection.descriptor)
+          //getKey(idCardFacedetection.descriptor,excel)
               
           //return (idCardFacedetection.descriptor)
       //
