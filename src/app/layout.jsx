@@ -3,7 +3,8 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 import { connectToMongoDB } from "../../config/database";
-
+import { Suspense } from "react";
+import Loading from "./loading";
 import { ReactQueryProvider } from "./components/ReactQueryClientProvider";
 import { getKey } from "../../_action/KeyAction";
 import Searchbar from "./components/Searchbar";
@@ -18,8 +19,12 @@ export default function RootLayout({ children }) {
    
       <body>
       <EmbedProviders>
-      <Searchbar></Searchbar>
+      <Suspense fallback={<Loading></Loading>}>
+
+         <Searchbar></Searchbar>
+      
         {children}
+        </Suspense>
         </EmbedProviders>
         </body>
      </ReactQueryProvider>

@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import Bounderi from '../components/Borderi';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'next/navigation'
+import Loading_Spinner from '../components/loading';
 export default function Page_deatil({params}){
      const { ref, inView } = useInView();
      const searchParams = useSearchParams()
@@ -44,7 +45,7 @@ export default function Page_deatil({params}){
             nextPage:newres['image'][1]
           })
        }
-    const { data, error, fetchNextPage, isFetchingNextPage ,refetch} =
+    const { data, isLoading, fetchNextPage, isFetchingNextPage ,refetch} =
     useInfiniteQuery({
       queryKey: ['image',search],
       queryFn: ({ pageParam = 0 }) => PostSearch(pageParam),
@@ -76,6 +77,9 @@ export default function Page_deatil({params}){
 
 return (
     <Bounderi>
+      {
+        isLoading&&<Loading_Spinner></Loading_Spinner>
+      }
         <div className='
          bg-white
            rounded-xl
@@ -90,9 +94,8 @@ return (
          w-[100%]
          h-50
          '
-         ref={ref}>{isFetchingNextPage && <p className='
-         text-white
-         '>'Loading...'</p>}Loading</div>
+         ref={ref}>{isFetchingNextPage &&<Loading_Spinner></Loading_Spinner>}
+         </div>
          </Bounderi>
         
 )

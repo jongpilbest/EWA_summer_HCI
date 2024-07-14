@@ -18,7 +18,7 @@ const  imagebase64 = async function(base64String){
        const idCardFacedetection = await faceapi.detectSingleFace(img,
           new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks().withFaceDescriptor();
-       console.log(idCardFacedetection.descriptor)
+
           return (idCardFacedetection.descriptor)
           //getKey(idCardFacedetection.descriptor,excel)
               

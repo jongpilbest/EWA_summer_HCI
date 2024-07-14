@@ -6,27 +6,40 @@ import { useInfiniteQuery,useMutation, useQueryClient } from '@tanstack/react-qu
 import { useEffect } from "react"
 import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
-export default function Page_deatil({params}){
+import { useSelector } from 'react-redux';
+export default function Page_deatil({}){
     const { ref, inView } = useInView();
     const searchParams = useSearchParams()
-    const queryClient= useQueryClient()
+    const search = searchParams.getAll('id')
+
+
+
+    const image_embed= useSelector(state=>state.embed.imageemb)
+    useEffect(()=>{
+      queryClient.invalidateQueries(['text_image']);
+      refetch()
+   
+     },[search[0],search[1]])
+   const queryClient= useQueryClient()   
     useEffect(() => {
    
         if (inView) {
-    
+         
            fetchNextPage()
+          
         }
       }, [inView]);
-      const search = searchParams.get('id')
+    
 
-
-    const PostSearch= async function(pageParam){
-     
-          const res= await fetch('http://localhost:3000/api',{
+    const PostSearch= async function(pageParam1){
+    
+          const res= await fetch('http://localhost:3000/api/image_text',{
             method:'POST',
             body:JSON.stringify({
-              lable:search,
-              pageParam1:pageParam
+              lable:search[0],
+              image:image_embed,
+              pageParam1:pageParam1[0],
+              pageParam2:pageParam1[1],
             }),
             headers:{
               'Content-Type':'application/json'
@@ -35,39 +48,33 @@ export default function Page_deatil({params}){
           })
            const newres=await res.json();
            return ({
-            data:newres['image'][0],
-            nextPage:newres['image'][1]
+            data:newres['image'],
+            nextPage:[newres['index'][0],newres['index'][1]]
           })
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['text',search],
-      queryFn: ({ pageParam = 0 }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=62?lastPage.nextPage:null,
+      queryKey: ['text_image',search[0]+search[1]],
+      queryFn: ({ pageParam = [0,0] }) => PostSearch(pageParam),
+      getNextPageParam:(lastPage) => lastPage.nextPage
     });
-    useEffect(()=>{
-      queryClient.invalidateQueries(['text']);
-      refetch()
-     },[search])
 
-  
 
- 
-   const content=data&&data.pages.map((el)=>
-     el['data'].map((ev,index)=>{
-        return     <div
-        key={index}
-        className='
-         my-4
-        '>
-   <img src={ev} className="
-      rounded-md 
-      ">
-      </img>
-         </div>
-     })
-  )
- 
+const content=data&&data.pages.map((el)=>
+  el['data'].map((ev,index)=>{
+     return     <div
+     key={index}
+     className='
+      my-4
+     '>
+<img src={ev} className="
+   rounded-md 
+   ">
+   </img>
+      </div>
+  })
+ )
+
 return (
 <Bounderi>
 {

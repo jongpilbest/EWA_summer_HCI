@@ -7,7 +7,7 @@ export async function POST(request) {
     const text= await request.json();
 
     const classifier = await pipe_line(text);
-    console.log('데이터 느려', classifier,text['lable'])
+
   return NextResponse.json({image:classifier});
 }
 

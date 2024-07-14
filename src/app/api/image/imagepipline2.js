@@ -24,7 +24,6 @@ const pipe_line2= async function(progress_callback){
      }
    }
 
-   console.log(queue,'이미지')
 
     return ([queue,i+1])
 
