@@ -29,7 +29,7 @@ export default function Page_deatil({params}){
 
     const PostSearch= async function(pageParam){
           
-           console.log(pageParam,'이미지 확인 부탁여',search[1]=='option1'?60:120)  
+         
           const res= await fetch('http://localhost:3000/api/image',{
             method:'POST',
             body:JSON.stringify({

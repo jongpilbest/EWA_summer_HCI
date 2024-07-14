@@ -12,8 +12,7 @@ export default function Page_deatil({}){
     const searchParams = useSearchParams()
     const search = searchParams.getAll('id')
 
-
-
+    
     const image_embed= useSelector(state=>state.embed.imageemb)
     useEffect(()=>{
       queryClient.invalidateQueries(['text_image']);
@@ -30,16 +29,17 @@ export default function Page_deatil({}){
         }
       }, [inView]);
     
-
+     const search_name=search[2]=='option1'?' man':' woman'
     const PostSearch= async function(pageParam1){
-    
+  
           const res= await fetch('http://localhost:3000/api/image_text',{
             method:'POST',
             body:JSON.stringify({
-              lable:search[0],
+              lable:search[0]+search_name,
               image:image_embed,
               pageParam1:pageParam1[0],
               pageParam2:pageParam1[1],
+              percent:search[2],
             }),
             headers:{
               'Content-Type':'application/json'
@@ -54,9 +54,9 @@ export default function Page_deatil({}){
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['text_image',search[0]+search[1]],
-      queryFn: ({ pageParam = [0,0] }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage
+      queryKey: ['text_image',search[0],search[2]],
+      queryFn: ({ pageParam = [ (search[2]=='option1'?0:61), (search[2]=='option1'?0:61)] }) => PostSearch(pageParam),
+      getNextPageParam:(lastPage) => JSON.stringify(lastPage.nextPage)!=JSON.stringify([(search[2]=='option1'?61:120),(search[2]=='option1'?61:120)])?lastPage.nextPage:null,
     });
 
 

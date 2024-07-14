@@ -8,7 +8,7 @@ let cachedConnection = null;
 export async function connectToMongoDB() {
   // If a cached connection exists, return it
   if (cachedConnection) {
-    console.log("Using cached db connection");
+    console.log("데이터 베이스 연결됨");
     return cachedConnection;
   }
   try {

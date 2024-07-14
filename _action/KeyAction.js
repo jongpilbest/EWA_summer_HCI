@@ -18,7 +18,7 @@ export  async function getKey(e,excel){
     newTodo.save()
 
   
-   console.log('이거 저장된거 마니?')
+
   } catch (error) {
     return { errMsg: error.message }
   }

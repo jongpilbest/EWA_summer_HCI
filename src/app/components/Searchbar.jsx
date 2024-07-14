@@ -32,10 +32,10 @@ const Searchbar= function(){
       }
 
       const handleSubmit = () => {
-      console.log('go')
+    
         if(text.length>0 && image_data.length>0){
           //3번째 페이지로 이동
-          router.push(`/text_image?id=${text}&id=${image_data}`)
+          router.push(`/text_image?id=${text}&id=${image_data}&id=${selectedOption}`)
          
         }
         else if ( text.length>0){
@@ -49,7 +49,7 @@ const Searchbar= function(){
      
         //mutation.mutate({ text:search_data,pageParam:1 });
       };
-      console.log(loading,'로딩?')
+      
 
 
     return (

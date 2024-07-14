@@ -8,13 +8,13 @@ import KeyModel from '../../../model/Keymodel';
 const pipe_line= async function(progress_callback){   
    const new_progress= progress_callback['lable']
    const queue=[];
-   console.log(new_progress,'확인점')
+   
 
    const pageParam= progress_callback['pageParam1']
    
    const search_text_embeding= await Ppline(new_progress);
    const data= await KeyModel.find();
-   console.log(data.length,'데이터 길이점')
+   
 
     // 열리는거 확인 이제 비교해서 cos높은거만 push 으로 모아놓기 
     for(var i=pageParam; i<67; i++){
