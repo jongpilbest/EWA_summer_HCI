@@ -8,8 +8,10 @@ import KeyModel from '../../../model/Keymodel';
 const pipe_line= async function(progress_callback){   
    const new_progress= progress_callback['lable']
    const queue=[];
+   console.log(new_progress,'확인점')
 
    const pageParam= progress_callback['pageParam1']
+   
    const search_text_embeding= await Ppline(new_progress);
    const data= await KeyModel.find();
    console.log(data.length,'데이터 길이점')
@@ -25,7 +27,7 @@ const pipe_line= async function(progress_callback){
         queue.push(data[i]['iamge_ral_src']);
       }
     }
-  console.log(queue,'큐')
+
     return ([queue,i+1])
 
   

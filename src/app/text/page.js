@@ -17,16 +17,17 @@ export default function Page_deatil({params}){
            fetchNextPage()
         }
       }, [inView]);
-      const search = searchParams.get('id')
-
+      const search = searchParams.getAll('id')
+      const search_name=search[1]=='option1'?' man':' woman'
 
     const PostSearch= async function(pageParam){
      
           const res= await fetch('http://localhost:3000/api',{
             method:'POST',
             body:JSON.stringify({
-              lable:search,
-              pageParam1:pageParam
+              lable:search[0]+search_name,
+              pageParam1:pageParam,
+        
             }),
             headers:{
               'Content-Type':'application/json'
@@ -41,14 +42,14 @@ export default function Page_deatil({params}){
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['text',search],
-      queryFn: ({ pageParam = 0 }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=120?lastPage.nextPage:null,
+      queryKey: ['text',search[0],search_name],
+      queryFn: ({ pageParam =  (search[1]=='option1'?0:61)  }) => PostSearch(pageParam),
+      getNextPageParam:(lastPage) => lastPage.nextPage!=(search[1]=='option1'?61:120)?lastPage.nextPage:null
     });
     useEffect(()=>{
       queryClient.invalidateQueries(['text']);
       refetch()
-     },[search])
+     },[search[0],search[1]])
 
   
 

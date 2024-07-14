@@ -15,7 +15,7 @@ export default function Page_deatil({params}){
      const [embed_id, setembed_id]=useState([]);
      const[image,setimage]=useState('')
      const search = searchParams.getAll('id')
-     console.log(search,'param 확인졈')
+
      const image_embed= useSelector(state=>state.embed.imageemb)
      const queryClient= useQueryClient()
      useEffect(()=>{
@@ -29,7 +29,7 @@ export default function Page_deatil({params}){
 
     const PostSearch= async function(pageParam){
           
-           console.log(pageParam,'이미지 확인 부탁여')  
+           console.log(pageParam,'이미지 확인 부탁여',search[1]=='option1'?60:120)  
           const res= await fetch('http://localhost:3000/api/image',{
             method:'POST',
             body:JSON.stringify({
@@ -52,14 +52,14 @@ export default function Page_deatil({params}){
     useInfiniteQuery({
       queryKey: ['image',search[0],search[1]],
       queryFn: ({ pageParam =  (search[1]=='option1'?0:61)    }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=120?lastPage.nextPage:null,
+      getNextPageParam:(lastPage) => lastPage.nextPage!=(search[1]=='option1'?61:120)?lastPage.nextPage:null,
     });
 
     useEffect(() => {
     
    
       if (inView) {
-        console.log('여기스크롤')
+    
          fetchNextPage()
       }
     }, [fetchNextPage,inView]);
