@@ -68,6 +68,7 @@ export default function Page_deatil({params}){
          </div>
      })
   )
+  console.log(content,'컨텐츠 길이')
  
 return (
 <Bounderi>
@@ -80,6 +81,7 @@ return (
            p-4
            columns-4  mx-auto space-y-4 gap-4
         w-[100%]'>
+            {content&&content[0].length==0 && <p > 검색 결과가 없습니다</p>}
        {content}
         </div>
         <div 

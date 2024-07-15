@@ -27,6 +27,8 @@ const pipe_line= async function(progress_callback){
         queue.push(data[i]['iamge_ral_src']);
       }
     }
+    // object 형식으로 한다음에 .. 그다음  sort 해서
+
 
     return ([queue,i+1])
 

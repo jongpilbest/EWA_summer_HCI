@@ -89,6 +89,7 @@ return (
            p-4
            columns-4  mx-auto space-y-4 gap-4    my-4
         w-[100%]'>
+            {content&&content[0].length==0 && <p > 검색 결과가 없습니다</p>}
        {content} 
        <div 
          className='
