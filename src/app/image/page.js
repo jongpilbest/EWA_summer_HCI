@@ -52,7 +52,7 @@ export default function Page_deatil({params}){
     useInfiniteQuery({
       queryKey: ['image',search[0],search[1]],
       queryFn: ({ pageParam =  (search[1]=='option1'?0:61)    }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=(search[1]=='option1'?61:120)?lastPage.nextPage:null,
+      getNextPageParam:(lastPage) => lastPage.nextPage<(search[1]=='option1'?61:120)?lastPage.nextPage:null,
     });
 
     useEffect(() => {
@@ -63,19 +63,26 @@ export default function Page_deatil({params}){
          fetchNextPage()
       }
     }, [fetchNextPage,inView]);
-   const content=data&&data.pages.map((el)=>
-     el['data'].map((ev,index)=>{
-        return  (
-   <img 
-   key={index}
-   src={ev} className="
-      rounded-md 
-      ">
-      </img>
-        )
-       
-     })
-  )
+    const content=data&&data.pages.map((el)=>
+      el['data'].map((ev,index)=>{
+         return     <div
+         key={index}
+         className='
+          my-1
+     
+     
+          w-[100%]
+          h-25v
+         '>
+    <img src={ev} className="
+       rounded-md 
+       w-[100%]
+            h-[100%]
+       ">
+       </img>
+          </div>
+      })
+   )
 
 
 return (
@@ -87,14 +94,13 @@ return (
          bg-white
            rounded-xl
            p-4
-           columns-4  mx-auto space-y-4 gap-4    my-4
+             grid grid-cols-4 gap-4
         w-[100%]'>
-            {content&&content[0].length==0 && <p > 검색 결과가 없습니다</p>}
+          
        {content} 
        <div 
          className='
          w-[100%]
-         h-80
          '
          ref={ref}>{isFetchingNextPage &&<Loading_Spinner></Loading_Spinner>}
          </div>

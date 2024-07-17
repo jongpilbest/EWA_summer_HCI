@@ -8,7 +8,7 @@ const nextConfig = {
         serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
     },
     
-    fs: false,
+  
     images: {
         domains: ['lh3.googleusercontent.com'],
         formats: ["image/webp"],

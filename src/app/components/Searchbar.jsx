@@ -14,15 +14,21 @@ const Searchbar= function(){
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
     };
-
-
+    //이미지 최적화를 하는게 날듯 
+   const [image_data,set_image_data]=useState('');
     const[loading,setloading]=useState(false);
     const [text,setText]= useState('');
+  
     const onChange= (e)=>{
       setText(e.target.value)
     }
+    
+
+
+
+
     const selectFile = useRef("");
-    const [image_data,set_image_data]=useState('');
+   
     const onChange_image = async function(e){
         setloading(true);
         const result=await ImageEnbedding(e.target.files[0]);
@@ -59,11 +65,10 @@ const Searchbar= function(){
          w-[100%] relative flex justify-center items-center h-60v">
            <div className='    w-[60%]    h-[70%]       flex    flex-col    items-center'>
             
-               <p className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</p>
+               <a  href="http://localhost:3000/"className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
             
                <div className="flex  justify-between my-2 w-[60%]"> <p className=" text-white">{image_data}</p> 
                <div>
-               <div className="mb-2 flex flex">
                 <input
                     type="radio"
                     id="option1"
@@ -71,11 +76,11 @@ const Searchbar= function(){
                     value="option1"
                     checked={selectedOption === 'option1'}
                     onChange={handleOptionChange}
-                    className="mr-2"
+                    className="mr-2 "
                 />
-                <label className="text-white" htmlFor="option1">man</label>
-            </div>
-            <div className="mb-2">
+                <label className="text-white mx-3" htmlFor="option1">man</label>
+         
+        
                 <input
                     type="radio"
                     id="option2"
@@ -83,11 +88,11 @@ const Searchbar= function(){
                     value="option2"
                     checked={selectedOption === 'option2'}
                     onChange={handleOptionChange}
-                    className="mr-2"
+                    className="mr-2 mx-1"
                 />
-                <label className="text-white" htmlFor="option2">woman</label>
-            </div>
-               <button  onClick={()=>set_image_data('')} className="bg-indigo-800 h-20  rounded-lg py-1 w-12 text-white"> X</button>
+                <label className="text-white mx-3" htmlFor="option2">woman</label>
+       
+               <button  onClick={()=>set_image_data('')} className="bg-indigo-800 h-20  rounded-lg py-1 w-10 text-white"> X</button>
                </div>
                </div>
           <div className='    w-[60%]    h-[10%]     rounded-xl bg-neutral-700 items-center flex flex-row justify-between

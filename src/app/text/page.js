@@ -18,16 +18,16 @@ export default function Page_deatil({params}){
         }
       }, [inView]);
       const search = searchParams.getAll('id')
-      const search_name=search[1]=='option1'?' man':' woman'
+
 
     const PostSearch= async function(pageParam){
      
           const res= await fetch('http://localhost:3000/api',{
             method:'POST',
             body:JSON.stringify({
-              lable:search[0]+search_name,
+              lable:search[0],
               pageParam1:pageParam,
-        
+              percent:search[1],
             }),
             headers:{
               'Content-Type':'application/json'
@@ -42,16 +42,16 @@ export default function Page_deatil({params}){
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ['text',search[0],search_name],
+      queryKey: ['text',search[0],search[1]],
       queryFn: ({ pageParam =  (search[1]=='option1'?0:61)  }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage!=(search[1]=='option1'?61:120)?lastPage.nextPage:null
+      getNextPageParam:(lastPage) => lastPage.nextPage<(search[1]=='option1'?61:120)?lastPage.nextPage:null
     });
     useEffect(()=>{
       queryClient.invalidateQueries(['text']);
       refetch()
      },[search[0],search[1]])
 
-  
+
 
  
    const content=data&&data.pages.map((el)=>
@@ -59,16 +59,22 @@ export default function Page_deatil({params}){
         return     <div
         key={index}
         className='
-         my-4
+         my-1
+    
+    
+         w-[100%]
+         h-25v
         '>
    <img src={ev} className="
       rounded-md 
+      w-[100%]
+           h-[100%]
       ">
       </img>
          </div>
      })
   )
-  console.log(content,'컨텐츠 길이')
+
  
 return (
 <Bounderi>
@@ -79,18 +85,21 @@ return (
          bg-white
            rounded-xl
            p-4
-           columns-4  mx-auto space-y-4 gap-4
+          grid grid-cols-4 gap-4
+        
         w-[100%]'>
-            {content&&content[0].length==0 && <p > 검색 결과가 없습니다</p>}
+   
        {content}
-        </div>
-        <div 
+       
+       <div 
          className='
          w-[100%]
          h-50
          '
          ref={ref}>{isFetchingNextPage &&<Loading_Spinner></Loading_Spinner>}
          </div>
+        </div>
+       
    
    </Bounderi>
 )
