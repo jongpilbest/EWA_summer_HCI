@@ -6,6 +6,7 @@ const Bounderi= function({children}){
     return(
         <div className=' w-full
         h-auto
+
         mx-auto
         flex-col
         flex
