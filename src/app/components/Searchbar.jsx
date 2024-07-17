@@ -67,7 +67,7 @@ const Searchbar= function(){
             
                <a  href="http://localhost:3000/"className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
             
-               <div className="flex  justify-between my-2 w-[60%]"> <p className=" text-white">{image_data}</p> 
+               <div className="flex  justify-between my-3 w-[60%]"> <p className=" text-white">{image_data}</p> 
                <div>
                 <input
                     type="radio"
@@ -92,7 +92,7 @@ const Searchbar= function(){
                 />
                 <label className="text-white mx-3" htmlFor="option2">woman</label>
        
-               <button  onClick={()=>set_image_data('')} className="bg-indigo-800 h-20  rounded-lg py-1 w-10 text-white"> X</button>
+               <button  onClick={()=>set_image_data('')} className="hover:bg-indigo-300 bg-indigo-800   text-sm  rounded-lg py-1 w-10 text-white"> X</button>
                </div>
                </div>
           <div className='    w-[60%]    h-[10%]     rounded-xl bg-neutral-700 items-center flex flex-row justify-between
