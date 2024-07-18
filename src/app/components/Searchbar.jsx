@@ -11,7 +11,7 @@ const Searchbar= function(){
   const dispatch= useDispatch();
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState('');
-
+    
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
     };
@@ -27,6 +27,7 @@ const Searchbar= function(){
 
 
 
+    const ref=useRef(null);
 
     const selectFile = useRef("");
    
@@ -40,7 +41,7 @@ const Searchbar= function(){
 
       const handleSubmit = async() => {
       
-
+       ref.current.style='visibilty'
       if(selectedOption==''){
         return;
       }
@@ -48,18 +49,23 @@ const Searchbar= function(){
           //3번째 페이지로 이동
           const  name_embed= await Ppline_text(text);
           dispatch(text_embed(name_embed))
+          ref.current.style.visibility = 'hidden';
           router.push(`/text_image?id=${text}&id=${image_data}&id=${selectedOption}`)
-         
+          
         }
         else if ( text.length>0){
               const  name_embed= await Ppline_text(text);
              dispatch(text_embed(name_embed))
+             ref.current.style.visibility = 'hidden';
              router.push(`/text?id=${text}&id=${selectedOption}`)
+                  
         }
         else{
+          ref.current.style.visibility = 'hidden';
           router.push(`/image?id=${image_data}&id=${selectedOption}`)
+              
         }
-    
+      
         //postSearch(search_data)
      
         //mutation.mutate({ text:search_data,pageParam:1 });
@@ -155,8 +161,14 @@ const Searchbar= function(){
             '>
           Search
               </button>
-           
+             <div ref={ref} style={{
+            visibility:'hidden'
+          }}>
+               <Loading_Spinner></Loading_Spinner>
           </div>
+          </div>
+        
+        
         </div>
 
     )
