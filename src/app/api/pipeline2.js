@@ -23,7 +23,7 @@ const queue=[];
      if(queue.length>20){
          break;
      }
-     if(similarity>0.63){
+     if(similarity>0.70){
        queue.push([similarity,data[i]['iamge_ral_src']]);
      }
        

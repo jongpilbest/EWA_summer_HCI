@@ -41,10 +41,12 @@ const Searchbar= function(){
 
       const handleSubmit = async() => {
       
-       ref.current.style='visibilty'
+ 
       if(selectedOption==''){
         return;
       }
+        ref.current.style='visibilty'
+
         if(text.length>0 && image_data.length>0){
           //3번째 페이지로 이동
           const  name_embed= await Ppline_text(text);
@@ -53,7 +55,7 @@ const Searchbar= function(){
           router.push(`/text_image?id=${text}&id=${image_data}&id=${selectedOption}`)
           
         }
-        else if ( text.length>0){
+         if ( text.length>0){
               const  name_embed= await Ppline_text(text);
              dispatch(text_embed(name_embed))
              ref.current.style.visibility = 'hidden';
