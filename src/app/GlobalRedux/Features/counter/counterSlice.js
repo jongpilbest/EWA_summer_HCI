@@ -4,7 +4,6 @@ import { createSlice  } from '@reduxjs/toolkit';
 export const counterSlice = createSlice({
     name: 'imageembed',
     initialState:{imageemb:[]
-
         ,textemb:[]
     },
     reducers: {

@@ -1,5 +1,5 @@
 "use client"
-
+import Image from 'next/image';
 import Bounderi from '../components/Borderi';
 import Loading_Spinner from '../components/loading';
 import { useInfiniteQuery,useMutation, useQueryClient } from '@tanstack/react-query';
@@ -7,12 +7,16 @@ import { useEffect } from "react"
 import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
 import { useSelector } from 'react-redux';
+import { text_embed } from '../GlobalRedux/Features/counter/counterSlice';
+
+
+
 export default function Page_deatil({}){
     const { ref, inView } = useInView();
     const searchParams = useSearchParams()
     const search = searchParams.getAll('id')
 
-    
+    const texxt_embed= useSelector(state=>state.embed.textemb)
     const image_embed= useSelector(state=>state.embed.imageemb)
     useEffect(()=>{
       queryClient.invalidateQueries(['text_image']);
@@ -29,13 +33,13 @@ export default function Page_deatil({}){
         }
       }, [inView]);
     
-     const search_name=search[2]=='option1'?' man':' woman'
+
     const PostSearch= async function(pageParam1){
   
           const res= await fetch('http://localhost:3000/api/image_text',{
             method:'POST',
             body:JSON.stringify({
-              lable:search[0]+search_name,
+              lable:texxt_embed,
               image:image_embed,
               pageParam1:pageParam1[0],
               pageParam2:pageParam1[1],
@@ -74,7 +78,7 @@ export default function Page_deatil({}){
     <img src={ev} className="
        rounded-md 
        w-[100%]
-            h-[100%]
+            h-50
        ">
        </img>
           </div>

@@ -8,10 +8,8 @@ import KeyModel from '../../../model/Keymodel';
 const pipe_line= async function(progress_callback){   
    const new_progress= progress_callback['lable']
     const pageParam= progress_callback['pageParam1']
-   const search_text_embeding= await Ppline(new_progress);
+   // const search_text_embeding= await Ppline(new_progress);
    
-
-
 
   const percent=progress_callback['percent'];
 const queue=[];
@@ -20,12 +18,15 @@ const queue=[];
     const emd=percent=='option1'?61:118
     // 열리는거 확인 이제 비교해서 cos높은거만 push 으로 모아놓기 
     for(var i=pageParam; i<emd; i++){
-      const similarity= await cos_sim(data[i]['keyembeding'][0],search_text_embeding);
+      const similarity= await cos_sim(data[i]['keyembeding'][0],new_progress);
   
      if(queue.length>20){
          break;
      }
-        queue.push([similarity,data[i]['iamge_ral_src']]);
+     if(similarity>0.62){
+       queue.push([similarity,data[i]['iamge_ral_src']]);
+     }
+       
     }
     // object 형식으로 한다음에 .. 그다음  sort 해서
      

@@ -1,15 +1,17 @@
 "use client"
-
+import Image from 'next/image';
 import Bounderi from '../components/Borderi';
 import Loading_Spinner from '../components/loading';
 import { useInfiniteQuery,useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from "react"
+import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
 export default function Page_deatil({params}){
     const { ref, inView } = useInView();
     const searchParams = useSearchParams()
     const queryClient= useQueryClient()
+    const image_embed= useSelector(state=>state.embed.textemb)
     useEffect(() => {
    
         if (inView) {
@@ -25,7 +27,7 @@ export default function Page_deatil({params}){
           const res= await fetch('http://localhost:3000/api',{
             method:'POST',
             body:JSON.stringify({
-              lable:search[0],
+              lable: await image_embed,
               pageParam1:pageParam,
               percent:search[1],
             }),
@@ -65,10 +67,10 @@ export default function Page_deatil({params}){
          w-[100%]
          h-25v
         '>
-   <img src={ev} className="
+   <img src={ev}
+   className="
       rounded-md 
-      w-[100%]
-           h-[100%]
+      h-40
       ">
       </img>
          </div>

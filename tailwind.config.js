@@ -10,7 +10,7 @@ module.exports = {
       '7xl': '4.2rem'
     },
     height:{
-     "60v":"60vh",
+     "60v":"65vh",
      "50v":'50vh'
 
     },

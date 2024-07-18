@@ -10,8 +10,8 @@ const nextConfig = {
     
   
     images: {
-        domains: ['lh3.googleusercontent.com'],
-        formats: ["image/webp"],
+        domains: ['lh3.google.com'],
+ 
     },
     async headers() {
         return [

@@ -3,9 +3,10 @@ import React from "react"
 import { useState,useRef } from "react";
 import Loading_Spinner from "./loading";
 import ImageEnbedding from "../../../_action/ImageEnbedding";
-import { image_embed } from "../GlobalRedux/Features/counter/counterSlice";
+import { image_embed,text_embed } from "../GlobalRedux/Features/counter/counterSlice";
 import { usePathname, useRouter } from 'next/navigation';
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
+import Ppline_text from "./P_text";
 const Searchbar= function(){
   const dispatch= useDispatch();
     const router = useRouter();
@@ -37,15 +38,23 @@ const Searchbar= function(){
         setloading(false)
       }
 
-      const handleSubmit = () => {
-    
+      const handleSubmit = async() => {
+      
+
+      if(selectedOption==''){
+        return;
+      }
         if(text.length>0 && image_data.length>0){
           //3번째 페이지로 이동
+          const  name_embed= await Ppline_text(text);
+          dispatch(text_embed(name_embed))
           router.push(`/text_image?id=${text}&id=${image_data}&id=${selectedOption}`)
          
         }
         else if ( text.length>0){
-          router.push(`/text?id=${text}&id=${selectedOption}`)
+              const  name_embed= await Ppline_text(text);
+             dispatch(text_embed(name_embed))
+             router.push(`/text?id=${text}&id=${selectedOption}`)
         }
         else{
           router.push(`/image?id=${image_data}&id=${selectedOption}`)
@@ -113,8 +122,8 @@ const Searchbar= function(){
            onChange={onChange}
            value={text}
             type="text"
-             placeholder="Search for image"
-            className=' w-[100%] bg-transparent text-white
+             placeholder="Search for image" 
+            className=' w-[100%] bg-transparent text-white 
             '
             >
   
@@ -141,7 +150,7 @@ const Searchbar= function(){
     
             className='
             bg-indigo-800  h-[8%] px-10 
-            
+            hover:bg-indigo-300
             text-white  flex  justify-center items-center    rounded-xl    
             '>
           Search
