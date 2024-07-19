@@ -54,7 +54,7 @@ export default function Page_deatil({params}){
      },[search[0],search[1]])
 
 
-  console.log(data,'데이터')
+
    const content=data&&data.pages.map((el)=>
      el['data'].map((ev,index)=>{
         return     <div
