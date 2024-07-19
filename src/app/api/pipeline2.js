@@ -9,7 +9,7 @@ const pipe_line= async function(progress_callback){
    const new_progress= progress_callback['lable']
     const pageParam= progress_callback['pageParam1']
    // const search_text_embeding= await Ppline(new_progress);
-   
+
 
   const percent=progress_callback['percent'];
 const queue=[];
@@ -23,7 +23,7 @@ const queue=[];
      if(queue.length>20){
          break;
      }
-     if(similarity>0.70){
+     if(similarity>0.60){
        queue.push([similarity,data[i]['iamge_ral_src']]);
      }
        

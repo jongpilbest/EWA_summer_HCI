@@ -9,6 +9,7 @@ import { ReactQueryProvider } from "./components/ReactQueryClientProvider";
 
 import Searchbar from "./components/Searchbar";
 import EmbedProviders from './GlobalRedux/provider'
+
 export default function RootLayout({ children }) {
   connectToMongoDB()
 
