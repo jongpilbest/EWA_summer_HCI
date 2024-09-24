@@ -6,33 +6,21 @@ import { useInfiniteQuery,useMutation, useQueryClient } from '@tanstack/react-qu
 import { useEffect, useState } from "react"
 import { useInView } from 'react-intersection-observer';
 import Bounderi from '../components/Borderi';
-import { useSelector } from 'react-redux';
+
 import { useSearchParams } from 'next/navigation'
 import Loading_Spinner from '../components/loading';
-export default function Page_deatil({params}){
+export default function Main_page({params}){
      const { ref, inView } = useInView();
-     const searchParams = useSearchParams()
-     const [embed_id, setembed_id]=useState([]);
-     const[image,setimage]=useState('')
-     const search = searchParams.get('id')
-     //const image_embed= useSelector(state=>state.embed.imageemb)
-     const queryClient= useQueryClient()
-     useEffect(()=>{
-      queryClient.invalidateQueries(['image']);
-       refetch()
-     },[search])
+  //   const searchParams = useSearchParams()
+   
 
 
-
-    
-
-    const PostSearch= async function(){
+    const PostSearch= async function(pageParam){
           
-         
-          const res= await fetch('http://localhost:3000/api/image',{
+          const res= await fetch('http://localhost:3000/api/Random',{
             method:'POST',
             body:JSON.stringify({
-              pageParam:search.split(',').splice(1,5),
+              pageParam:pageParam
             }),
             headers:{
               'Content-Type':'application/json'
@@ -41,25 +29,23 @@ export default function Page_deatil({params}){
           })
            const newres=await res.json();
            return ({
-            data:newres['image']
+            data:newres['image'],
+            nextPage:pageParam+1
           })
        }
     const { data, isLoading, fetchNextPage, isFetchingNextPage ,refetch} =
     useInfiniteQuery({
-      queryKey: ['image',search[0],search[1]],
-      queryFn: ({ pageParam =  1  }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) =>lastPage.nextPage<120?lastPage.nextPage:null,
+      queryKey: ['image'],
+      queryFn: ({ pageParam = 1  }) => PostSearch(pageParam),
+      getNextPageParam:(lastPage) => lastPage.nextPage<120?lastPage.nextPage:null,
     });
-
+ 
     useEffect(() => {
     
-   
       if (inView) {
-    
          fetchNextPage()
       }
     }, [fetchNextPage,inView]);
- 
     const content=data&&data.pages.map((el)=>
       el['data'].map((ev,index)=>{
          return     <div
@@ -91,7 +77,8 @@ return (
            p-4
              grid grid-cols-4 gap-4
         w-[100%]'>
-          
+          <p> 여기는 메인페이지 입니다. </p>
+        
        {content} 
        <div 
          className='

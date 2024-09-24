@@ -12,7 +12,8 @@ import EmbedProviders from './GlobalRedux/provider'
 
 export default function RootLayout({ children }) {
   connectToMongoDB()
-
+  // 지금 serachbar 는 고정해놓고 . 밑에 나오는 이미지만 달라져서 붙이고 있는데 ....
+  
   return (
 
     <html lang="en">
@@ -23,7 +24,6 @@ export default function RootLayout({ children }) {
       <Suspense fallback={<Loading></Loading>}>
 
          <Searchbar></Searchbar>
-      
         {children}
         </Suspense>
         </EmbedProviders>

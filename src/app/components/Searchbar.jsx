@@ -23,8 +23,28 @@ const Searchbar= function(){
     const onChange= (e)=>{
       setText(e.target.value)
     }
-    
 
+    const nmae=[
+      'Male',
+      'Female',
+      'Preschooler',
+      'Adult',
+      'Senior'
+
+    ]
+    const [activeButtons, setActiveButtons] = useState({
+      button1: false,
+      button2: false,
+      button3: false,
+      button4: false,
+      button5: false,
+    });
+    const handleClick = (buttonKey) => {
+      setActiveButtons((prevState) => ({
+        ...prevState,
+        [buttonKey]: !prevState[buttonKey], // 해당 키의 상태를 토글
+      }));
+    };
 
 
     const ref=useRef(null);
@@ -41,12 +61,31 @@ const Searchbar= function(){
 
       const handleSubmit = async() => {
       
- 
-      if(selectedOption==''){
-        return;
+      //넘어가는 페이지 
+      // 버튼 / text 인지 구별하는게 필요함
+      var array_object=Object.values(activeButtons);
+  
+      var check_button=(array_object.join(''))
+
+      if(check_button=='falsefalsefalsefalsefalse'){
+         
+      //이럴때ㅐ만 text 으로 간다고 치고 
+
+      }
+      else{
+        var new_include='';
+        array_object.forEach((el,index)=>{
+          if(el){
+            new_include+=`,${nmae[index]}`
+          }
+        })
+
+        router.push(`/image?id=${new_include}`);
+
       }
         ref.current.style='visibilty'
-
+        /*
+          // 넘어가는 페이지  다른페이지로 이동하지만 content 부분만 업데이트 되고 있음 
         if(text.length>0 && image_data.length>0){
           //3번째 페이지로 이동
           const  name_embed= await Ppline_text(text);
@@ -71,20 +110,21 @@ const Searchbar= function(){
         //postSearch(search_data)
      
         //mutation.mutate({ text:search_data,pageParam:1 });
-      };
+      */
+
+        };
       
-
-
+ 
     return (
         <div
         className=" 
        bg-neutral-800
-         w-[100%] relative flex justify-center items-center h-60v">
+         w-[100%] relative flex justify-center items-center py-12 ">
            <div className='    w-[60%]    h-[70%]       flex    flex-col    items-center'>
             
                <a  href="http://localhost:3000/"className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
             
-               <div className="flex  justify-between my-3 w-[60%]"> <p className=" text-white">{image_data}</p> 
+               <div className="flex  justify-between my-4 w-[60%]"> <p className=" text-white">{image_data}</p> 
                <div>
                 <input
                     type="radio"
@@ -112,9 +152,9 @@ const Searchbar= function(){
                <button  onClick={()=>set_image_data('')} className="hover:bg-indigo-300 bg-indigo-800   text-sm  rounded-lg py-1 w-10 text-white"> X</button>
                </div>
                </div>
-          <div className='    w-[60%]    h-[10%]     rounded-xl bg-neutral-700 items-center flex flex-row justify-between
+          <div className='    w-[60%]  my-1      rounded-xl bg-neutral-700 items-center flex flex-row justify-between
           '>
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="text-white m-5 size-6">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="text-white m-3  size-5">
     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
   </svg>
   {
@@ -139,7 +179,7 @@ const Searchbar= function(){
             </input>  
             <svg 
             onClick={() => selectFile.current.click()}
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" text-white m-5 size-6">
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" text-white m-3 size-5">
     <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
   </svg>
   <input
@@ -150,22 +190,53 @@ const Searchbar= function(){
         />
   
           </div>
-          <div className='p-4'></div>
-          
-            <button 
-            onClick={()=>handleSubmit()
+          <div className="flex justify-center py-4 w-[80%]">
+          {Object.keys(activeButtons).map((buttonKey,index) => (
+        
+        <button
+          key={buttonKey}
+          onClick={() => handleClick(buttonKey)}
+          className={` bg-indigo-800  w-[15%] px-8
+            py-1
+            mx-2 
+
+  text-white  flex  justify-center items-center rounded-xl 
+
+            ${
+              activeButtons[buttonKey] ? 'bg-sky-200' : 'bg-indigo-800'
             }
-    
-            className='
-            bg-indigo-800  h-[8%] px-10 
-            hover:bg-indigo-300
-            text-white  flex  justify-center items-center    rounded-xl    
-            '>
-          Search
-              </button>
+
+          }`}
+        >
+         {
+          nmae[index]
+         }
+        </button>
+      ))}
+            </div>
+            <div className='p-4'></div>
+          
+          <button 
+          onClick={()=>handleSubmit()
+          }
+  
+          className='
+          bg-indigo-800  w-[20%] px-8
+            py-1
+            mx-2 
+
+  text-white  flex  justify-center items-center rounded-xl 
+
+          '>
+        Search
+            </button>
+         
+  
+
+
              <div ref={ref} style={{
             visibility:'hidden'
-          }}>
+               }}>
                <Loading_Spinner></Loading_Spinner>
           </div>
           </div>

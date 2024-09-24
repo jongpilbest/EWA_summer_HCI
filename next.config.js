@@ -13,6 +13,7 @@ const nextConfig = {
         domains: ['lh3.google.com'],
  
     },
+    
     async headers() {
         return [
             {

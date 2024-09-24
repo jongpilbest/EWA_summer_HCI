@@ -27,6 +27,8 @@ export default function Page_deatil({params}){
           const res= await fetch('http://localhost:3000/api',{
             method:'POST',
             body:JSON.stringify({
+              // search 에서 입력한 데이터를 지우지 말고 저장햇다가 쓰는 그런 용도로 redux 에 저장한거 
+
               lable: await image_embed,
               pageParam1:pageParam,
               percent:search[1],
@@ -37,6 +39,9 @@ export default function Page_deatil({params}){
          
           })
            const newres=await res.json();
+            //여기서 nextpage 의 숫자 (그니까 인덱스 번호 i 을 받아서 > 그걸 nextpage 에다가 넣음)
+
+
            return ({
             data:newres['image'][0],
             nextPage:newres['image'][1]
@@ -46,15 +51,17 @@ export default function Page_deatil({params}){
     useInfiniteQuery({
       queryKey: ['text',search[0],search[1]],
       queryFn: ({ pageParam =  (search[1]=='option1'?0:61)  }) => PostSearch(pageParam),
+      // 여기서 기존 쿼리가 (woman일때는) 한계 인덱스번호가 61보다 작으면 더 query 실행하라는 의미고  
       getNextPageParam:(lastPage) => lastPage.nextPage<(search[1]=='option1'?61:120)?lastPage.nextPage:null
     });
     useEffect(()=>{
       queryClient.invalidateQueries(['text']);
       refetch()
      },[search[0],search[1]])
+     // search "text"와 인덱스가 달라지는 경우 기존 query 삭제후 다시 refech 하라는거 같은데 
 
 
-
+     
    const content=data&&data.pages.map((el)=>
      el['data'].map((ev,index)=>{
         return     <div

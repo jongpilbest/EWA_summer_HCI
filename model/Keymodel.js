@@ -3,7 +3,8 @@ import { Schema, model, models } from 'mongoose'
 const postSchema = new Schema({
   keyembeding:Array,
   imageembeding:Array,
-  iamge_ral_src:String
+  iamge_ral_src:String,
+  index:Number
 
 }, { timestamps: true })
 
