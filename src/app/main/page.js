@@ -74,6 +74,9 @@ export default function Main_page({params}){
 
 return (
     <Bounderi>
+           {
+        isLoading&&<Loading_Spinner></Loading_Spinner>
+      } 
    
         <div className='
          bg-white
