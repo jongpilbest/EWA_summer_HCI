@@ -2,7 +2,7 @@
 import React from "react"
 import { useState,useRef } from "react";
 import Loading_Spinner from "./loading";
-import ImageEnbedding from "../../../_action/ImageEnbedding";
+
 import { image_embed,text_embed } from "../GlobalRedux/Features/counter/counterSlice";
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch } from "react-redux"
@@ -10,13 +10,9 @@ import Ppline_text from "./P_text";
 const Searchbar= function(){
   const dispatch= useDispatch();
     const router = useRouter();
-    const [selectedOption, setSelectedOption] = useState('');
-    
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
+   
     //이미지 최적화를 하는게 날듯 
-   const [image_data,set_image_data]=useState('');
+   
     const[loading,setloading]=useState(false);
     const [text,setText]= useState('');
   
@@ -48,17 +44,6 @@ const Searchbar= function(){
 
 
     const ref=useRef(null);
-
-    const selectFile = useRef("");
-   
-    const onChange_image = async function(e){
-        setloading(true);
-        const result=await ImageEnbedding(e.target.files[0]);
-        set_image_data(e.target.files[0].name)
-        dispatch(image_embed({result}))
-        setloading(false)
-      }
-
       const handleSubmit = async() => {
       
       //넘어가는 페이지 
@@ -68,8 +53,23 @@ const Searchbar= function(){
       var check_button=(array_object.join(''))
 
       if(check_button=='falsefalsefalsefalsefalse'){
-         
-      //이럴때ㅐ만 text 으로 간다고 치고 
+        ref.current.style.visibility = 'visible';
+        const  name_embed= await Ppline_text(text);  
+        ref.current.style.visibility = 'hidden';
+        dispatch(text_embed(name_embed))
+     
+        if(text.includes('female')){
+          router.push(`/text?id=${text}&id=20,41`);
+          return;
+        }
+        if(text.includes('male')){
+          router.push(`/text?id=${text}&id=0,21`);
+          return;
+        }
+        else{
+          router.push(`/text?id=${text}&id=0,41`)
+        }
+      
 
       }
       else{
@@ -81,9 +81,8 @@ const Searchbar= function(){
         })
 
         router.push(`/image?id=${new_include}`);
-
       }
-        ref.current.style='visibilty'
+        //
         /*
           // 넘어가는 페이지  다른페이지로 이동하지만 content 부분만 업데이트 되고 있음 
         if(text.length>0 && image_data.length>0){
@@ -124,32 +123,11 @@ const Searchbar= function(){
             
                <a  href="http://localhost:3000/"className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
             
-               <div className="flex  justify-between my-4 w-[60%]"> <p className=" text-white">{image_data}</p> 
+               <div className="flex  justify-between my-4 w-[60%]"> 
                <div>
-                <input
-                    type="radio"
-                    id="option1"
-                    name="options"
-                    value="option1"
-                    checked={selectedOption === 'option1'}
-                    onChange={handleOptionChange}
-                    className="mr-2 "
-                />
-                <label className="text-white mx-3" htmlFor="option1">man</label>
-         
-        
-                <input
-                    type="radio"
-                    id="option2"
-                    name="options"
-                    value="option2"
-                    checked={selectedOption === 'option2'}
-                    onChange={handleOptionChange}
-                    className="mr-2 mx-1"
-                />
-                <label className="text-white mx-3" htmlFor="option2">woman</label>
+               
        
-               <button  onClick={()=>set_image_data('')} className="hover:bg-indigo-300 bg-indigo-800   text-sm  rounded-lg py-1 w-10 text-white"> X</button>
+              
                </div>
                </div>
           <div className='    w-[60%]  my-1      rounded-xl bg-neutral-700 items-center flex flex-row justify-between
@@ -177,17 +155,7 @@ const Searchbar= function(){
   
   
             </input>  
-            <svg 
-            onClick={() => selectFile.current.click()}
-            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" text-white m-3 size-5">
-    <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-  </svg>
-  <input
-          type="file"
-          style={{ display: "none" }}
-          ref={selectFile} 
-          onChange={onChange_image}
-        />
+          
   
           </div>
           <div className="flex justify-center py-4 w-[80%]">
