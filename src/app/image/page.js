@@ -88,7 +88,9 @@ export default function Page_deatil({params}){
 
 return (
     <Bounderi>
-   
+        {
+        isLoading&&<Loading_Spinner></Loading_Spinner>
+      } 
         <div className='
          bg-white
            rounded-xl

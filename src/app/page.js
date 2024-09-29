@@ -49,6 +49,7 @@ import Loading_Spinner from './components/loading';
          key={index}
          className='
           my-1
+          
     
           w-[100%]
           h-25v
