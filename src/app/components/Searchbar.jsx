@@ -21,11 +21,11 @@ const Searchbar= function(){
     }
 
     const nmae=[
-      'Male',
-      'Female',
-      'Preschooler',
-      'Adult',
-      'Senior'
+      'male',
+      'female',
+      'preschooler',
+      'adult',
+      'senior'
 
     ]
     const [activeButtons, setActiveButtons] = useState({
@@ -59,15 +59,15 @@ const Searchbar= function(){
         dispatch(text_embed(name_embed))
      
         if(text.includes('female')){
-          router.push(`/text?id=${text}&id=20,41`);
+          router.push(`/text?id=${text}&id=0,151`);
           return;
         }
         if(text.includes('male')){
-          router.push(`/text?id=${text}&id=0,21`);
+          router.push(`/text?id=${text}&id=152,300`);
           return;
         }
         else{
-          router.push(`/text?id=${text}&id=0,41`)
+          router.push(`/text?id=${text}&id=0,300`)
         }
       
 
@@ -121,7 +121,7 @@ const Searchbar= function(){
          w-[100%] relative flex justify-center items-center py-12 ">
            <div className='    w-[60%]    h-[70%]       flex    flex-col    items-center'>
             
-               <a  href="http://localhost:3000/"className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
+               <a onClick={()=>router.push('./')} className=' text-white text-7xl text-center font-extrabold p-14 font-inter'> Virtual Human</a>
             
                <div className="flex  justify-between my-4 w-[60%]"> 
                <div>
@@ -144,6 +144,8 @@ const Searchbar= function(){
       <span className="sr-only">Loading...</span>
   </div>)
   }
+
+
           <input
            onChange={onChange}
            value={text}

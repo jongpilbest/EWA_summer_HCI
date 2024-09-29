@@ -11,10 +11,6 @@ import Image from 'next/image';
 import Loading_Spinner from '../components/loading';
 export default function Main_page({params}){
      const { ref, inView } = useInView();
-  //   const searchParams = useSearchParams()
-   
-
-
     const PostSearch= async function(pageParam){
           
           const res= await fetch('http://localhost:3000/api/Random',{
@@ -57,10 +53,10 @@ export default function Main_page({params}){
           h-25v
          '>
     <Image 
-     width={500}  // 이미지 너비
+     width={300}  // 이미지 너비
      height={300} // 이미지 높이
         alt="image_for_main"
-    src={`https://drive.google.com/thumbnail?id=${ev.iamge_ral_src}&sz=w1000`} className="
+    src={`${ev.iamge_ral_src}`} className="
        rounded-md 
        w-[100%]
             h-[100%]
@@ -84,16 +80,7 @@ return (
        
        {/*content*/}
 
-       <Image 
-     width={500}  // 이미지 너비
-     height={300} // 이미지 높이
-        alt="image_for_main"
-    src={`https://github.com/dltpals16/human_figure_dataset/blob/master/young_girl/South%20Asian/01.png?raw=true`} className="
-       rounded-md 
-       w-[100%]
-            h-[100%]
-       ">
-       </Image>
+   
 
     
        <div 

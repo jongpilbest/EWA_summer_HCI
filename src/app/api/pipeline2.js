@@ -20,11 +20,12 @@ const pipe_line= async function(progress_callback){
    
     // 열리는거 확인 이제 비교해서 cos높은거만 push 으로 모아놓기 
     for(var i=pageParam; i<percent; i++){
-      const similarity= await cos_sim(data[i]['keyembeding'][0],new_progress);
+      const similarity= await cos_sim(data[i]['keyembeding'],new_progress);
+     
      if(queue.length>=4){
          break;
      }
-     if(similarity>0.60){
+     if(similarity>0.71){
        queue.push([similarity,data[i]['iamge_ral_src']]);
      }
        

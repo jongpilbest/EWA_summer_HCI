@@ -3,7 +3,7 @@
 
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 import { useInView } from 'react-intersection-observer';
 import Bounderi from '../components/Borderi';
 
@@ -15,7 +15,7 @@ export default function Page_deatil({params}){
      const searchParams = useSearchParams()
      const search = searchParams.get('id')
 
-  
+     const [isImageLoading, setImageLoading] = useState(true)
     const PostSearch= async function(params){
           
          
@@ -70,15 +70,16 @@ export default function Page_deatil({params}){
           w-[100%]
           h-25v
          '>
-       <Image 
-     width={500}  // 이미지 너비
-     height={300} // 이미지 높이
+  
+    <Image 
+           	quality={80}
+           className=" w-[100%] rounded-md"
+           width={200}  // 이미지 너비
+           height={200}  // 이미지 높이
         alt="image_for_main"
-    src={`https://drive.google.com/thumbnail?id=${ev.iamge_ral_src}&sz=w1000`} className="
-       rounded-md 
-       w-[100%]
-            h-[100%]
-       ">
+   
+        src={`${ev.iamge_ral_src}`} 
+       >
        </Image>
           </div>
       })

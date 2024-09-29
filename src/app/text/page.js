@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Bounderi from '../components/Borderi';
 import Loading_Spinner from '../components/loading';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
@@ -15,7 +15,7 @@ export default function Page_deatil({params}){
     const image_embed= useSelector(state=>state.embed.textemb,shallowEqual)
       const search = searchParams.getAll('id')
       const search_split_arr= search[1].split(',')
-  
+      const [isImageLoading, setImageLoading] = useState(true)
 
       const PostSearch= async function(pageParam){
    
@@ -76,20 +76,23 @@ export default function Page_deatil({params}){
          w-[100%]
          h-25v
         '>
-              <Image 
-     width={500}  // 이미지 너비
-     height={300} // 이미지 높이
+    
+    <Image 
+    	quality={80}
+          className=" w-[100%] rounded-md"
+          width={200}  // 이미지 너비
+          height={200} // 이미지 높이
         alt="image_for_main"
-    src={`https://drive.google.com/thumbnail?id=${ev.toString()}&sz=w1000`} className="
-       rounded-md 
-       w-[100%]
-            h-[100%]
-       ">
+     
+        src={`${ev.toString()}`} 
+       >
        </Image>
 
          </div>
     })
   )
+
+ 
 
  
 return (
@@ -104,7 +107,9 @@ return (
           grid grid-cols-4 gap-4
         
         w-[100%]'>
-   
+      
+          { data && data.pages[0].data.length==0 && <p> 검색 결과가 없습니다</p>}
+
        {content}
        
        <div 

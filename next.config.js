@@ -11,7 +11,8 @@ const nextConfig = {
   
     images: {
         domains: ['drive.google.com',
-            'github.com'
+            'github.com',
+            'raw.githubusercontent.com'
         ],
  
     },

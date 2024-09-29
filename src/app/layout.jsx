@@ -21,9 +21,8 @@ export default function RootLayout({ children }) {
    
       <body>
       <EmbedProviders>
+      <Searchbar></Searchbar>
       <Suspense fallback={<Loading></Loading>}>
-
-         <Searchbar></Searchbar>
         {children}
         </Suspense>
         </EmbedProviders>
