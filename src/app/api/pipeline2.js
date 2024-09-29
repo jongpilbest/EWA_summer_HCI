@@ -25,7 +25,7 @@ const pipe_line= async function(progress_callback){
      if(queue.length>=4){
          break;
      }
-     if(similarity>0.71){
+     if(similarity>0.67){
        queue.push([similarity,data[i]['iamge_ral_src']]);
      }
        
