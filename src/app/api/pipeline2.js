@@ -38,11 +38,21 @@ const pipe_line= async function(progress_callback){
 
     if(pageParam==0 ||pageParam==300){
      
+<<<<<<< HEAD
      // console.log('여기 몇번?')
    
     for(var i=sort_range[0]; i<sort_range[1]; i++){
       const similarity= await cos_sim(data[i].toObject()[name],new_progress);
      queue.push([similarity,data[i]['iamge_ral_src']]);
+=======
+     if(queue.length>=4){
+         break;
+     }
+     if(similarity>0.67){
+       queue.push([similarity,data[i]['iamge_ral_src']]);
+     }
+       
+>>>>>>> 546b9c9127ab04004a8b64618668140ca2f0cc49
     }
     // object 형식으로 한다음에 .. 그다음  sort 해서
      // similarty 높은순서대로 가겠다는 그말이네 
