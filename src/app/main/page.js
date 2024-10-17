@@ -48,18 +48,19 @@ export default function Main_page({params}){
          key={index}
          className='
           my-1
-    
           w-[100%]
+          h-[100%]
           h-25v
          '>
     <Image 
      width={300}  // 이미지 너비
-     height={300} // 이미지 높이
-        alt="image_for_main"
-    src={`${ev.iamge_ral_src}`} className="
+     height={400} // 이미지 높이
+     alt="image_for_main"
+     src={`${ev.iamge_ral_src}`} 
+     className="
        rounded-md 
        w-[100%]
-            h-[100%]
+       h-[100%]
        ">
        </Image>
           </div>

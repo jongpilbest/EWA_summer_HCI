@@ -5,7 +5,7 @@ var image_list=[];
 export async function POST(request) {
   
     const params= await (request.json())
-    const data= await KeyModel.find();
+    //const data= await KeyModel.find();
    
   // 여기서 index 번호 추가하는거 
   const page_param=params['pageParam'];
@@ -23,7 +23,7 @@ export async function POST(request) {
     image_list.push(el._id)
   }) 
   
-  
+
   return NextResponse.json({image:image_});
 }
 

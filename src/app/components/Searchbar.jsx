@@ -21,19 +21,16 @@ const Searchbar= function(){
     }
 
     const nmae=[
-      'male',
-      'female',
-      'preschooler',
-      'adult',
-      'senior'
-
+      'TEST 1',
+      'TEST 2',
+      'TEST 3',
+     
     ]
     const [activeButtons, setActiveButtons] = useState({
       button1: false,
       button2: false,
       button3: false,
-      button4: false,
-      button5: false,
+    
     });
     const handleClick = (buttonKey) => {
       setActiveButtons((prevState) => ({
@@ -45,43 +42,54 @@ const Searchbar= function(){
 
     const ref=useRef(null);
       const handleSubmit = async() => {
-      
-      //넘어가는 페이지 
-      // 버튼 / text 인지 구별하는게 필요함
-      var array_object=Object.values(activeButtons);
-  
-      var check_button=(array_object.join(''))
+      var code_number=-1;
 
-      if(check_button=='falsefalsefalsefalsefalse'){
-        ref.current.style.visibility = 'visible';
-        const  name_embed= await Ppline_text(text);  
-        ref.current.style.visibility = 'hidden';
-        dispatch(text_embed(name_embed))
+      const true_button= Object.values(activeButtons).map((el,index)=>{
+       if(el){
+        code_number=index;
+        return;
+       }
+      })
+
+     console.log(code_number,'버튼 지금 뭐 눌렸나느')
+
      
-        if(text.includes('female')){
-          router.push(`/text?id=${text}&id=0,151`);
-          return;
-        }
-        if(text.includes('male')){
-          router.push(`/text?id=${text}&id=152,300`);
-          return;
-        }
-        else{
-          router.push(`/text?id=${text}&id=0,300`)
-        }
-      
+   
 
-      }
-      else{
-        var new_include='';
-        array_object.forEach((el,index)=>{
-          if(el){
-            new_include+=`,${nmae[index]}`
-          }
-        })
 
-        router.push(`/image?id=${new_include}`);
-      }
+  // text 으로 페이지가는거 
+     if(text){
+       ref.current.style.visibility = 'visible';
+       const  name_embed= await Ppline_text(text);  
+       ref.current.style.visibility = 'hidden';
+       dispatch(text_embed(name_embed))
+    
+       if(text.includes('female')){
+         router.push(`/text?id=${text}&id=0,299&id=${code_number}`);
+         return;
+       }
+       if(text.includes('male')){
+         router.push(`/text?id=${text}&id=300,600&id=${code_number}`);
+         return;
+       }
+       else{
+         router.push(`/text?id=${text}&id=0,600&id=${code_number}`);
+       }
+     
+     }
+     // 카테고리로 가는거 
+
+     //else{
+     //  var new_include='';
+     //  array_object.forEach((el,index)=>{
+     //    if(el){
+     //      new_include+=`,${nmae[index]}`
+     //    }
+     //  })
+     //  router.push(`/image?id=${new_include}`);
+     //}
+//
+
         //
         /*
           // 넘어가는 페이지  다른페이지로 이동하지만 content 부분만 업데이트 되고 있음 
@@ -161,6 +169,7 @@ const Searchbar= function(){
   
           </div>
           <div className="flex justify-center py-4 w-[80%]">
+            {/* 버튼 여기 고쳐야됨 !!!! 버튼을 3개로 바꾸고 test1, test2, test3 으로 바꾸고 클릭하는게 따라 결과물 다르게 주는거 즉 db 어떻게 접근해야되는지 거기에 대한 코드 작성 */}
           {Object.keys(activeButtons).map((buttonKey,index) => (
         
         <button

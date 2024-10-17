@@ -50,7 +50,7 @@ import Loading_Spinner from './components/loading';
          className='
           my-1
           
-    
+           h-[100%]
           w-[100%]
           h-25v
          '>
@@ -60,7 +60,8 @@ import Loading_Spinner from './components/loading';
     <Image 
            
            quality={80}
-           className=" w-[100%] rounded-md"
+           className=" w-[100%] rounded-md
+           "
      width={200}  // 이미지 너비
      height={200} // 이미지 높이
         alt="image_for_main"

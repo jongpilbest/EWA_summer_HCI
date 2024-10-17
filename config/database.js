@@ -12,8 +12,14 @@ export async function connectToMongoDB() {
     return cachedConnection;
   }
   try {
+    const options = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 10000, // 서버 선택 타임아웃 (10초)
+      socketTimeoutMS: 60000, // 소켓 타임아웃 (60초)
+  };
     // If no cached connection exists, establish a new connection to MongoDB
-    const cnx = await mongoose.connect(process.env.MONGODB_URI);
+    const cnx = await mongoose.connect(process.env.MONGODB_URI,options);
     // Cache the connection for future use
     cachedConnection = cnx.connection;
     // Log message indicating a new MongoDB connection is established

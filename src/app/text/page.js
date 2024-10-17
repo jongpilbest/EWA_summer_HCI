@@ -9,16 +9,22 @@ import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
 import { shallowEqual } from 'react-redux';
 export default function Page_deatil({params}){
+  const name= [
+    'tag','keyembeding1','keyembeding2'
+  ]
     const { ref, inView } = useInView();
     const searchParams = useSearchParams()
-    const queryClient= useQueryClient()
+   
     const image_embed= useSelector(state=>state.embed.textemb,shallowEqual)
       const search = searchParams.getAll('id')
       const search_split_arr= search[1].split(',')
-      const [isImageLoading, setImageLoading] = useState(true)
+      const embed_number= name[search[2]];
+     
+
+    //console.log(image_embed,'text 에서 에러 없는거지?왜 에러가 나냐')
+
 
       const PostSearch= async function(pageParam){
-   
           const res= await fetch('http://localhost:3000/api',{
             method:'POST',
             body:JSON.stringify({
@@ -26,6 +32,8 @@ export default function Page_deatil({params}){
             lable: await image_embed,
             pageParam1:pageParam,
             percent: parseInt(search_split_arr[1]),
+            embed_number:embed_number,
+            sort_range:search_split_arr
             }),
             headers:{
               'Content-Type':'application/json'
@@ -33,6 +41,7 @@ export default function Page_deatil({params}){
          
           })
            const newres=await res.json();
+          // console.log(newres,'데이터')
             //여기서 nextpage 의 숫자 (그니까 인덱스 번호 i 을 받아서 > 그걸 nextpage 에다가 넣음)
            return ({
             data:newres['image'][0],
@@ -41,16 +50,14 @@ export default function Page_deatil({params}){
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } = 
     useInfiniteQuery({
-      queryKey: ['text',search[0]],
-      queryFn: ({ pageParam =search_split_arr[0]  }) => PostSearch(pageParam),
+      queryKey: ['text',search[0],name[search[2]]],
+      queryFn: ({ pageParam = parseInt(search_split_arr[0])  }) => PostSearch(pageParam),
       // 여기서 기존 쿼리가 (woman일때는) 한계 인덱스번호가 61보다 작으면 더 query 실행하라는 의미고  
-      
       getNextPageParam:(lastPage) =>{
-     
        return lastPage.nextPage<parseInt(search_split_arr[1]) ?lastPage.nextPage:null}
 
     });
-
+   //console.log(data,'무한 로딩 뭐냐')
     useEffect(() => {
       if (search[0]) {
         refetch();
@@ -67,31 +74,31 @@ export default function Page_deatil({params}){
      // search "text"와 인덱스가 달라지는 경우 기존 query 삭제후 다시 refech 하라는거 같은데 
 //     
 
-   const content=data&&data.pages.map((el)=>
-     el['data'].map((ev,index)=>{
-        return     <div
-        key={index}
-        className='
-         my-1
-         w-[100%]
-         h-25v
-        '>
-    
-    <Image 
-    	quality={80}
-          className=" w-[100%] rounded-md"
-          width={200}  // 이미지 너비
-          height={200} // 이미지 높이
-        alt="image_for_main"
+    const content=data&&data.pages.map((el)=>
+      el['data'].map((ev,index)=>{
+         return     <div
+         key={index}
+         className='
+          my-1
+          w-[100%]
+          h-25v
+         '>
      
-        src={`${ev.toString()}`} 
-       >
-       </Image>
-
-         </div>
-    })
-  )
-
+     <Image 
+     	quality={80}
+           className=" w-[100%] rounded-md"
+           width={200}  // 이미지 너비
+           height={200} // 이미지 높이
+         alt="image_for_main"
+      
+         src={`${ev[1].toString()}`} 
+        >
+        </Image>
+ 
+          </div>
+     })
+   )
+ 
  
 
  
