@@ -62,7 +62,7 @@ const pipe_line= async function(progress_callback){
     // 필터링 된거 순서대로 내보는식으로 하면될듯 
     // 처음 300개네 ..? 그니까 지금 4개씩 보내야되는거지
     //console.log('?2',pageParam-main_start,pageParam+8-main_start )
-    const dat_final=store_here.slice(pageParam-main_start,pageParam+8-main_start);
+    const dat_final=store_here.slice(pageParam-main_start,pageParam+20-main_start);
     //const dat_final= await queue.map(innerArr => innerArr.slice(pageParam, pageParam+4));
     // console.log(dat_final,'여기 비어있나?')
 
@@ -91,7 +91,7 @@ const pipe_line= async function(progress_callback){
     
     //console.log(dat_final,'??????')
 //    console.log(pageParam,'데이터',dat_final)
-    return ([dat_final,pageParam+9])
+    return ([dat_final,pageParam+21])
 
   
 }
