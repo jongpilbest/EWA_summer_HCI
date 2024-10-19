@@ -4,20 +4,22 @@ import { pipeline, cos_sim } from '@xenova/transformers';
 //search bar 로부터 text 임베딩하느코드 
 import * as faceapi from 'face-api.js';
 
+import fs from 'fs';
+import path from 'path';
+var number=0;
 import KeyModel from '../../../model/Keymodel';
-var store_here=[]
+
 const pipe_line= async function(progress_callback){   
+
+
    const new_progress= progress_callback['lable']
     const pageParam= parseInt( progress_callback['pageParam1']);
   const percent= parseInt(progress_callback['percent']);
-  //여기로 for 문 마지막 
   const name=progress_callback['embed_number']
   const sort_range=progress_callback['sort_range']
-
-   const queue=[];
-   const data= await KeyModel.find();
-  
-   //const plut_severage=sort_range[0]+sort_range[1];
+   var queue=[];
+   var data=[];
+ 
    var main_start=0;
    if(sort_range=="0,299" ||
     sort_range=="300,600"||
@@ -39,19 +41,32 @@ const pipe_line= async function(progress_callback){
     if(pageParam==0 ||pageParam==300){
      
      // console.log('여기 몇번?')
-   
+     if(name==0){
+         const filePath = await path.join(process.cwd(), 'DataBAse', 'first.json');
+     const jsonData =  await fs.readFileSync(filePath, 'utf-8');
+      data= await JSON.parse(jsonData)
+
+     }
+     if(name=='1'){
+      const filePath = await path.join(process.cwd(), 'DataBAse', 'second.json');
+      const jsonData =  await fs.readFileSync(filePath, 'utf-8');
+       data= await JSON.parse(jsonData)
+     }
+
+  
     for(var i=sort_range[0]; i<sort_range[1]; i++){
-      const similarity= await cos_sim(data[i].toObject()[name],new_progress);
+      const similarity= await cos_sim(data[i]['keyembeding1'],new_progress);
      queue.push([similarity,data[i]['iamge_ral_src']]);
     }
-    // object 형식으로 한다음에 .. 그다음  sort 해서
-     // similarty 높은순서대로 가겠다는 그말이네 
-    await queue.sort((a,b)=>{
+  // object 형식으로 한다음에 .. 그다음  sort 해서
+    //similarty 높은순서대로 가겠다는 그말이네 
+     await queue.sort((a,b)=>{
       return  b[0]-a[0]
     })
-    store_here= queue;
-
-  }
+  
+     }
+     queue= queue.slice(0,10);
+    
    }
    //console.log(data[1]['tag'],'')
    //console.log(data[1].toObject()['tag'])
@@ -62,7 +77,8 @@ const pipe_line= async function(progress_callback){
     // 필터링 된거 순서대로 내보는식으로 하면될듯 
     // 처음 300개네 ..? 그니까 지금 4개씩 보내야되는거지
     //console.log('?2',pageParam-main_start,pageParam+8-main_start )
-    const dat_final=store_here.slice(pageParam-main_start,pageParam+20-main_start);
+  
+  
     //const dat_final= await queue.map(innerArr => innerArr.slice(pageParam, pageParam+4));
     // console.log(dat_final,'여기 비어있나?')
 
@@ -90,8 +106,9 @@ const pipe_line= async function(progress_callback){
     //console.log(queue)
     
     //console.log(dat_final,'??????')
-//    console.log(pageParam,'데이터',dat_final)
-    return ([dat_final,pageParam+21])
+ 
+
+    return ([queue,pageParam+21])
 
   
 }

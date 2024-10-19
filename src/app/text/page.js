@@ -9,16 +9,14 @@ import { useInView } from 'react-intersection-observer';
 import { useSearchParams } from 'next/navigation'
 import { shallowEqual } from 'react-redux';
 export default function Page_deatil({params}){
-  const name= [
-    'tag','keyembeding1','keyembeding2'
-  ]
+
     const { ref, inView } = useInView();
     const searchParams = useSearchParams()
    
     const image_embed= useSelector(state=>state.embed.textemb,shallowEqual)
       const search = searchParams.getAll('id')
       const search_split_arr= search[1].split(',')
-      const embed_number= name[search[2]];
+    
      
 
     //console.log(image_embed,'text 에서 에러 없는거지?왜 에러가 나냐')
@@ -32,7 +30,7 @@ export default function Page_deatil({params}){
             lable: await image_embed,
             pageParam1:pageParam,
             percent: parseInt(search_split_arr[1]),
-            embed_number:embed_number,
+            embed_number:search[2],
             sort_range:search_split_arr
             }),
             headers:{
@@ -50,7 +48,7 @@ export default function Page_deatil({params}){
        }
     const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage } = 
     useInfiniteQuery({
-      queryKey: ['text',search[0],name[search[2]]],
+      queryKey: ['text',search[0],search[2]],
       queryFn: ({ pageParam = parseInt(search_split_arr[0])  }) => PostSearch(pageParam),
       // 여기서 기존 쿼리가 (woman일때는) 한계 인덱스번호가 61보다 작으면 더 query 실행하라는 의미고  
       getNextPageParam:(lastPage) =>{
@@ -58,20 +56,20 @@ export default function Page_deatil({params}){
 
     });
    //console.log(data,'무한 로딩 뭐냐')
-    useEffect(() => {
-      if (search[0]) {
-        refetch();
-      }
-    }, [search[0]]);
+    //useEffect(() => {
+    //  if (search[0]) {
+    //    refetch();
+    //  }
+    //}, [search[0]]);
   
 
 
-    useEffect(() => {
-      if (inView ) {
-        fetchNextPage();
-      }
-    }, [inView, isFetchingNextPage]);
-     // search "text"와 인덱스가 달라지는 경우 기존 query 삭제후 다시 refech 하라는거 같은데 
+   // useEffect(() => {
+   //   if (inView ) {
+   //     fetchNextPage();
+   //   }
+   // }, [inView, isFetchingNextPage]);
+   //  // search "text"와 인덱스가 달라지는 경우 기존 query 삭제후 다시 refech 하라는거 같은데 
 //     
 
     const content=data&&data.pages.map((el)=>
