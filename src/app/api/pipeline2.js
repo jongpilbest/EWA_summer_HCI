@@ -65,7 +65,7 @@ const pipe_line= async function(progress_callback){
     })
   
      }
-     queue= queue.slice(0,10);
+     queue= queue.slice(0,20);
     
    }
    //console.log(data[1]['tag'],'')
