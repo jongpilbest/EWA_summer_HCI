@@ -1,22 +1,22 @@
 const nextConfig = {
     // (Optional) Export as a standalone site
     // See https://nextjs.org/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files
-    output: 'standalone', // Feel free to modify/remove this option
-    
+    output: 'export', // Feel free to modify/remove this option
+    basePath: '/EWA_summer_HCI_deploy',
     // Indicate that these packages should not be bundled by webpack
     experimental: {
         serverComponentsExternalPackages: ['sharp', 'onnxruntime-node'],
     },
-    
-  
+
+
     images: {
         domains: ['drive.google.com',
             'github.com',
             'raw.githubusercontent.com'
         ],
- 
+
     },
-    
+
     async headers() {
         return [
             {
