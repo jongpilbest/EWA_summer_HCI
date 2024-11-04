@@ -8,8 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "deploy": "next build && touch out/.nojekyll && git add -f out/ && git commit -m \"Deploy\" && git subtree push --prefix out origin gh-pages",
-  
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
     "@tanstack/react-query": "^5.48.0",
