@@ -11,38 +11,38 @@ import Image from 'next/image';
 import Loading_Spinner from './components/loading';
  function Page() {
   const [isImageLoading, setImageLoading] = useState(true)
-  const { ref, inView } = useInView();
-    const PostSearch= async function(pageParam){
-          
-          const res= await fetch('http://localhost:3000/api/Random',{
-            method:'POST',
-            body:JSON.stringify({
-              pageParam:pageParam
-            }),
-            headers:{
-              'Content-Type':'application/json'
-            },
-         
-          })
-           const newres=await res.json();
-           return ({
-            data:newres['image'],
-            nextPage:pageParam+1
-          })
-       }
-    const { data, isLoading, fetchNextPage, isFetchingNextPage ,refetch} =
-    useInfiniteQuery({
-      queryKey: ['image'],
-      queryFn: ({ pageParam = 1  }) => PostSearch(pageParam),
-      getNextPageParam:(lastPage) => lastPage.nextPage<120?lastPage.nextPage:null,
-    });
- 
-    useEffect(() => {
-    
-      if (inView) {
-         fetchNextPage()
-      }
-    }, [fetchNextPage,inView]);
+//  const { ref, inView } = useInView();
+//    const PostSearch= async function(pageParam){
+//          
+//          const res= await fetch('http://localhost:3000/api/Random',{
+//            method:'POST',
+//            body:JSON.stringify({
+//              pageParam:pageParam
+//            }),
+//            headers:{
+//              'Content-Type':'application/json'
+//            },
+//         
+//          })
+//           const newres=await res.json();
+//           return ({
+//            data:newres['image'],
+//            nextPage:pageParam+1
+//          })
+//       }
+//    const { data, isLoading, fetchNextPage, isFetchingNextPage ,refetch} =
+//    useInfiniteQuery({
+//      queryKey: ['image'],
+//      queryFn: ({ pageParam = 1  }) => PostSearch(pageParam),
+//      getNextPageParam:(lastPage) => lastPage.nextPage<120?lastPage.nextPage:null,
+//    });
+// 
+//    useEffect(() => {
+//    
+//      if (inView) {
+//         fetchNextPage()
+//      }
+//    }, [fetchNextPage,inView]);
     //const content=data&&data.pages.map((el)=>
     //  el['data'].map((ev,index)=>{
     //     return     <div
